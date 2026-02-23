@@ -1,0 +1,23 @@
+// أضف هذا الكود داخل الـ <script> في صفحة index.html
+const tg = window.Telegram.WebApp;
+const userData = tg.initDataUnsafe.user;
+
+// إرسال بيانات المستخدم للسيرفر (البوت) عند الفتح
+fetch('https://your-backend-api.com/login', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+        user_id: userData.id,
+        username: userData.username,
+        first_name: userData.first_name,
+        auth_date: tg.initDataUnsafe.auth_date,
+        hash: tg.initDataUnsafe.hash // للأمان والتحقق من البيانات
+    })
+})
+.then(response => response.json())
+.then(data => {
+    document.getElementById('balance').innerText = data.points;
+    if(data.is_banned) {
+        document.body.innerHTML = "<h1>⚠️ تم حظرك بسبب محاولة التعدد</h1>";
+    }
+});
