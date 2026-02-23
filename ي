@@ -1,0 +1,22 @@
+import telebot
+from telebot import types
+
+TOKEN = 'TOKEN_BOT_HERE'
+bot = telebot.TeleBot(TOKEN)
+WEB_APP_URL = 'https://your-domain.com/index.html' # رابط الصفحة التي رفعتها
+
+@bot.message_handler(commands=['start'])
+def start(message):
+    markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    # إنشاء زر يفتح الـ Mini App
+    web_app_info = types.WebAppInfo(WEB_APP_URL)
+    btn = types.KeyboardButton(text="🌙 فتح تطبيق أرباح رمضان", web_app=web_app_info)
+    markup.add(btn)
+    
+    bot.send_message(
+        message.chat.id, 
+        "أهلاً بك في نسخة رمضان! 🌙\nاضغط على الزر أدناه لفتح التطبيق المصغر وبدء كسب النقاط.", 
+        reply_markup=markup
+    )
+
+bot.infinity_polling()
