@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أرباح رمضان 🌙</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #4b2c5e 100%);
+            color: white;
+            font-family: 'Cairo', sans-serif;
+            text-align: center;
+            margin: 0; padding: 20px;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #d4af37;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+        .points { font-size: 2em; color: #d4af37; font-weight: bold; }
+        .btn {
+            background: #d4af37;
+            color: #1a1a2e;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; }
+    </style>
+</head>
+<body>
+    <div class="stars">✨</div>
+    <img src="https://img.icons8.com/fluency/96/crescent-moon.png" alt="Ramadan">
+    <h1>أهلاً بك يا <span id="username">صائم</span> 🌙</h1>
+    
+    <div class="card">
+        <p>رصيدك الحالي</p>
+        <div class="points" id="balance">0</div>
+        <p>نقطة</p>
+    </div>
+
+    <div class="card">
+        <h3>مهام اليوم</h3>
+        <button class="btn" onclick="checkSub()">التحقق من الاشتراك</button>
+        <button class="btn" onclick="shareLink()">دعوة الأصدقاء 🔗</button>
+    </div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // لفتح التطبيق بكامل الشاشة
+        
+        document.getElementById('username').innerText = tg.initDataUnsafe.user.first_name;
+
+        function checkSub() {
+            tg.showAlert("جاري التحقق من القنوات...");
+        }
+
+        function shareLink() {
+            const inviteLink = `https://t.me/YOUR_BOT_USERNAME?start=${tg.initDataUnsafe.user.id}`;
+            tg.openTelegramLink(`https://t.me/share/url?url=${inviteLink}&text=سجل في بوت أرباح رمضان واربح جوائز مالية!`);
+        }
+    </script>
+</body>
+</html>
